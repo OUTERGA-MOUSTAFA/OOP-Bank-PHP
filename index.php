@@ -4,16 +4,8 @@ include_once('src/Compte.php');
 include_once('src/Courant.php');
 include_once('src/Epargne.php');
 include_once('repo/ClientRepo.php');
-//   **** before start using abstact ****
-$Mohamed = new client(
-    'Mohamed',
-    'JA184572',
-    '06554477',
-    'gmail@mail.fr',
-    90000,
-    'Tanger',
-    '2020-01-09'
-);
+include_once('repo/CompteRepo.php');
+
 
 // $compte = new compte(
 //     // 'Ali',
@@ -61,6 +53,15 @@ $Mohamed = new client(
 // print_r($CompteEpargne);
 // echo '</pre>';
 //'Mohamed','JA15427','06554477','email@mail.fr',90000,'Tanger','2000-01-09'
+$Mohamed = new client(
+    'Mohamed',
+    'JA184572',
+    '06554477',
+    'gmail@mail.fr',
+    90000,
+    'Tanger',
+    '2020-01-09'
+);
 $client = new ClientRepo();
 // $client->createClient($Mohamed);
 $Clients = $client->AfficherClients();
@@ -81,3 +82,6 @@ echo '</pre>';
     echo "<script>alert('No one with this email!')</script>";
 }
 
+$compte = new CompteEpargne("JA15427","CIH",'Nador','Memon',"784572547856922",0);
+$CompteCourant-> CompteRepo()->createCompte();
+$CompteCourant->createCompteCourant();

@@ -9,7 +9,7 @@ class ClientRepo {
         $this->pdo = Database::getInstance()->getconexion();
     }
     function createClient($Newclient) {
-        $query = 'SELECT CIN , email FROM CLIENT where CIN = ? OR email = ?';
+        $query = 'SELECT CIN, email FROM CLIENT where CIN = ? OR email = ?';
         try{
             $stmt = $this->pdo->prepare($query);
             $stmt->execute([$Newclient->getCIN(),$Newclient->getEmail()]);

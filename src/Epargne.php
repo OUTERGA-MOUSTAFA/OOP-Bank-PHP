@@ -1,49 +1,52 @@
 <?php
-class compteEpargne extends Compt{
+<?php
+
+class CompteEpargne extends Compte {
+
     private static float $fees = 1;
-    // protected for saving transaction 
-    protected $montant;
+    private static string $type = "CompteEpargne";
+
+    protected float $montant = 0;
     protected ?DateTime $dateDeposit = null;
-    protected $retrait;
-    protected ?DateTime $dateRetrait = null; // means null-> no transaction || datetime -> transaction 
+    protected float $retrait = 0;
+    protected ?DateTime $dateRetrait = null;
 
-    public function __construct($clientCin,$dateCreation,$bank,$ville,$agence,$rib,$sold
-                        , $dateDeposit, $retrait, $dateRetrait) 
-    {        
-        parent::__construct($clientCin,$dateCreation,$bank,$ville,$agence,$rib,$sold);
-        static::$fees = $fees;
-        $this->montant = $montant;
-        $this->dateDeposit = $dateDeposit;
-        $this->retrait = $retrait;
-        $this->dateRetrait = $dateRetrait;
-
+    function __construct(
+        string $clientCin,
+        string $bank,
+        string $ville,
+        string $agence,
+        string $rib,
+        float $sold
+    ){
+        parent::__construct($clientCin, $bank, $ville, $agence, $rib, $sold);
     }
 
-    // Getters function
-    static function getFees(){return static:: $fees;}
+    function getType(): string {
+        return static::$type;
+    }
+
+    static function getFees(): float {
+        return static::$fees;
+    }
+
     function deposit(float $money){
-        $total = $this->sold + static::$fees;
-        if($money > 0 && $total >= 0){
-            $this->sold += $money;
-            $this->montant = $money;
-            $this->dateDeposit = new DateTime();
-            
-            return $this->sold;
-        }
-        return 0;
-        
-    }
-     static function retrait(float $money){
-        $total = $this->sold;
-        if($total<$this->sold){
+        if($money <= 0) return false;
 
-            $this->sold -= $money;
-            $this->retrait = $money;
-            $this->dateRetrait = new DateTime();
-            return $this->sold;            
-        }
-            
-            return 0;
+        $this->sold += $money;
+        $this->montant = $money;
+        $this->dateDeposit = new DateTime();
+
+        return $this->sold;
     }
 
+    function retrait(float $money){
+        if($money <= 0 || $money > $this->sold) return false;
+        $amount = $money - getFees();
+        $this->sold -= $money;
+        $this->retrait = $money;
+        $this->dateRetrait = new DateTime();
+
+        return $this->sold;
+    }
 }

@@ -1,5 +1,5 @@
 <?php
- class Compt{
+abstract class Compte{
 
     protected $clientCin;
     protected $dateCreation;
@@ -15,6 +15,7 @@
         $this->bank = $bank;
         $this->ville = $city;
         $this->agence = $agent;
+        $this->type = $type;
         $this->rib = $seri;
         $this->sold = $sold;
     }
@@ -25,6 +26,7 @@
     function getBank(){return $this->bank;}
     function getVille(){return $this->ville;}
     function getAgence(){return $this->agence;}
+    abstract function getType();
     function getRib(){return $this->hideCard($this->rib);}
     function getSold(){return $this->sold;}
     // setters
@@ -48,7 +50,7 @@
     //     $this->ville . ", date creation: " . $this->dateCreation->format("Y-m-d"). ", Seri: " . $this->hideCard($this->rib);
     // }
 
-    // abstract function deposit($money);
-    // abstract function retrait($money);
+    abstract function deposit(float $money);
+    abstract function retrait(float $money);
 
 }
